@@ -21,7 +21,7 @@ def generate_flip(prob, d):
             List1 = heads.append(1)
         else:
             List2 = tails.append(1)
-    return (len(heads), len(tails))
+    return (len(heads))
 
 
 # main
@@ -32,6 +32,7 @@ def generate_flip(prob, d):
 #print(generate_flip(prob,d))
 
 dict1 = dict()
+dict2 = dict()
 sum =0
 
 # d=100, n = 100, Theta = 1/4
@@ -52,80 +53,118 @@ sum =0
 
 # d = 100 and n =100 using a simulated coin with theta = 0.25
 d=100
-n = 100
-theta = 0.25
-print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
+n = 10000
+theta1 = 0.49
+print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta1)
 for times in range (0,n):
-        z = generate_flip(theta,d)
+        z = generate_flip(theta1,d)
         if z not in dict1:
             dict1[z] = 1
         else:
             dict1[z] =dict1[z]+1
 print("The probability of (Head, Tail)>>>")
 for key in dict1:
-    print(key, dict1[key]/(n))
+    print(key," Head: ", dict1[key]/(n))
     sum += (dict1[key]/(n))
 print("The sum of the probabilities is:", sum, '\n')
+
+theta2 = 0.5
+sum=0
+print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta2)
+for times in range (0,n):
+        z = generate_flip(theta2,d)
+        if z not in dict2:
+            dict2[z] = 1
+        else:
+            dict2[z] =dict2[z]+1
+print("The probability of (Head, Tail)>>>")
+for key in dict2:
+    print(key," Head: ", dict2[key]/(n))
+    sum += (dict2[key]/(n))
+print("The sum of the probabilities is:", sum, '\n')
+
+
+
+
+lists = sorted(dict1.items()) # sorted by key, return a list of tuples
+x, y = zip(*lists) # unpack a list of pairs into two tuples
+
+lists = sorted(dict2.items()) # sorted by key, return a list of tuples
+v, w = zip(*lists) # unpack a list of pairs into two tuples
+
+plt.plot(x,y)#0.5
+plt.plot(v,w)#0.25
+plt.title(f'Histogram of {d} flips, {n} tries, and {theta1} {theta2}')
+plt.xlabel("Number of heads")
+plt.ylabel("Frequency")
+plt.legend([f'Theta = {theta1}', f'Theta = {theta2}'])
+plt.show()
+
+
 
 
 
 # d = 100 and n =100 using a simulated coin with theta = 0.5
-dict1 = dict()
-sum =0
-d=100
-n = 100
-theta = 0.5
-print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
-for times in range (0,n):
-        z = generate_flip(theta,d)
-        if z not in dict1:
-            dict1[z] = 1
-        else:
-            dict1[z] =dict1[z]+1
-print("The probability of (Head, Tail)>>>")
-for key in dict1:
-    print(key, dict1[key]/(n))
-    sum += (dict1[key]/(n))
-print("The sum of the probabilities is:", sum, '\n')
+# dict2 = dict()
+# sum =0
+# d=100
+# n = 100
+# theta = 0.5
+# print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
+# for times in range (0,n):
+#         z = generate_flip(theta,d)
+#         if z not in dict2:
+#             dict2[z] = 1
+#         else:
+#             dict2[z] =dict2[z]+1
+# print("The probability of (Head, Tail)>>>")
+# for key in dict2:
+#     print(key, dict2[key]/(n))
+#     sum += (dict2[key]/(n))
+# print("The sum of the probabilities is:", sum, '\n')
+
+
+
+# ----------------------------------------------------------------------
 
 
 # d = 10 and n =1000 using a simulated coin with theta = 1/3
-dict1 = dict()
-sum =0
-d=10
-n = 1000
-theta = 1/3
-print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
-for times in range (0,n):
-        z = generate_flip(theta,d)
-        if z not in dict1:
-            dict1[z] = 1
-        else:
-            dict1[z] =dict1[z]+1
-print("The probability of (Head, Tail)>>>")
-for key in dict1:
-    print(key, dict1[key]/(n))
-    sum += (dict1[key]/(n))
-print("The sum of the probabilities is:", sum, '\n')
+# dict1 = dict()
+# sum =0
+# d=10
+# n = 1000
+# theta = 1/3
+# print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
+# for times in range (0,n):
+#         z = generate_flip(theta,d)
+#         if z not in dict1:
+#             dict1[z] = 1
+#         else:
+#             dict1[z] =dict1[z]+1
+# print("The probability of (Head, Tail)>>>")
+# for key in dict1:
+#     print(key, dict1[key]/(n))
+#     sum += (dict1[key]/(n))
+# print("The sum of the probabilities is:", sum, '\n')
 
-# d = 10 and n =1000 using a simulated coin with theta = 1/2
-dict1 = dict()
-sum =0
-d=10
-n = 1000
-theta = 1/2
-print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
-for times in range (0,n):
-        z = generate_flip(theta,d)
-        if z not in dict1:
-            dict1[z] = 1
-        else:
-            dict1[z] =dict1[z]+1
-print("The probability of (Head, Tail)>>>")
-for key in dict1:
-    print(key, dict1[key]/(n))
-    sum += (dict1[key]/(n))
-print("The sum of the probabilities is:", sum, '\n')
+# # d = 10 and n =1000 using a simulated coin with theta = 1/2
+# dict1 = dict()
+# sum =0
+# d=10
+# n = 1000
+# theta = 1/2
+# print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta)
+# for times in range (0,n):
+#         z = generate_flip(theta,d)
+#         if z not in dict1:
+#             dict1[z] = 1
+#         else:
+#             dict1[z] =dict1[z]+1
+# print("The probability of (Head, Tail)>>>")
+# for key in dict1:
+#     print(key, dict1[key]/(n))
+#     sum += (dict1[key]/(n))
+# print("The sum of the probabilities is:", sum, '\n')
 
 
 
