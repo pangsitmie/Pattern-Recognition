@@ -2,6 +2,7 @@ import numpy as np
 from random import random
 import matplotlib.pyplot as plt
 import scipy.stats as stats
+import math
 
 
 # d = number of flips
@@ -77,4 +78,11 @@ plt.title(
 plt.xlabel("X Number of heads")
 plt.ylabel("Frequency")
 plt.legend([f'Theta = {theta1}', f'Theta = {theta2}'])
+plt.show()
+
+mu = 0
+variance = 1
+sigma = math.sqrt(variance)
+x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+plt.plot(x, stats.norm.pdf(x, mu, sigma))
 plt.show()
