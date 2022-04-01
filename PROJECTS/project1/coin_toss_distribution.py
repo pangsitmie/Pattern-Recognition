@@ -52,7 +52,7 @@ dict1 = dict()
 dict2 = dict()
 sum =0
 d=100
-n = 100
+n = 10000
 
 #case1
 theta1 = 1/4
@@ -117,10 +117,13 @@ print("all probability in dict2 are:", probability2)
 
 
 # -------------------------------PLOTTING THE GRAPH-------------------------------
-plt.title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
-plt.xlabel("X Number of heads")
-plt.ylabel("Probability")
-plt.legend([f'Theta = {theta1}', f'Theta = {theta2}'])
+# plt.title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
+# plt.xlabel("X Number of heads")
+# plt.ylabel("Probability")
+# plt.legend([f'Theta = {theta1}', f'Theta = {theta2}'])
+
+
+fig, ax = plt.subplots()
 
 # plot the 1st theta and gausian
 l_list1 = [k for k, v in od1.items() for _ in range(v)]
@@ -128,9 +131,9 @@ mu1 = np.mean(l_list1)
 sigma1 = np.std(l_list1)
 plt.bar(list(od1.keys()),probability1)
 u = np.linspace(mu1 - 4 * sigma1, mu1 + 4 * sigma1, 100)
-ax2 = plt.twinx()
-ax2.plot(u, stats.norm.pdf(u, mu1, sigma1), color='purple')
-ax2.set_ylabel('normal curve')
+ax = plt.twinx()
+
+
 
 # plot the 2st theta and gausian
 l_list2 = [k for k, v in od2.items() for _ in range(v)]
@@ -138,10 +141,15 @@ mu2 = np.mean(l_list2)
 sigma2 = np.std(l_list2)
 plt.bar(list(od2.keys()),probability2, color='orange')
 u2 = np.linspace(mu2 - 4 * sigma2, mu2 + 4 * sigma2, 100)
-ax3 = plt.twinx()
-ax3.plot(u2, stats.norm.pdf(u2, mu2, sigma2), color='crimson')
-ax3.set_ylabel('normal curve')
+#ax2 = plt.twinx()
 
+ax.plot(u, stats.norm.pdf(u, mu1, sigma1), color='purple')
+ax.plot(u2, stats.norm.pdf(u2, mu2, sigma2), color='crimson')
+
+
+ax.set_title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
+fig.supxlabel('X Number of heads')
+fig.supylabel('Probability')
 
 
 plt.show()
