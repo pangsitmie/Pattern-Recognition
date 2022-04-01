@@ -35,17 +35,6 @@ def generate_flip(prob, d):
             List2 = tails.append(1)
     return (len(heads))
 
-# def pdf(n,theta,x):
-#     mean = n*theta
-#     std = n * theta * (1- theta)
-#     # mean = np.mean(x)
-#     # std = np.std(x)
-#     y_list = []
-#     for i in range(len(x)):
-#         y_list.append(1/(std * np.sqrt(2 * np.pi)) * np.exp( - (x[i] - mean)**2 / (2 * std**2)))
-#     # y_out = 1/(std * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * std**2))
-#     print(mean, std,"...")
-#     return y_list
 
 #initialize variables
 dict1 = dict()
@@ -130,9 +119,6 @@ l_list1 = [k for k, v in od1.items() for _ in range(v)]
 mu1 = np.mean(l_list1)
 sigma1 = np.std(l_list1)
 plt.bar(list(od1.keys()),probability1)
-u = np.linspace(mu1 - 4 * sigma1, mu1 + 4 * sigma1, 100)
-ax = plt.twinx()
-
 
 
 # plot the 2st theta and gausian
@@ -140,38 +126,10 @@ l_list2 = [k for k, v in od2.items() for _ in range(v)]
 mu2 = np.mean(l_list2)
 sigma2 = np.std(l_list2)
 plt.bar(list(od2.keys()),probability2, color='orange')
-u2 = np.linspace(mu2 - 4 * sigma2, mu2 + 4 * sigma2, 100)
-#ax2 = plt.twinx()
-
-ax.plot(u, stats.norm.pdf(u, mu1, sigma1), color='purple')
-ax.plot(u2, stats.norm.pdf(u2, mu2, sigma2), color='crimson')
 
 
 ax.set_title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
 fig.supxlabel('X Number of heads')
 fig.supylabel('Probability')
 
-
 plt.show()
-
-
-
-
-# plt.bar(x,probability1)#0.5
-# plt.plot(x,probability1)#0.5
-
-
-# # PLOT GAUSSIAN CURVE
-
-
-# fig, ax = plt.subplots(1, 1)
-
-# #ax.scatter(od1.keys(), od1.values())
-# ax.bar(list(od1.keys()),probability1)
-# ax.set_xlabel('Key')
-# ax.set_ylabel('Length of value')
-
-
-
-
-
