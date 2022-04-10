@@ -27,6 +27,7 @@ from collections import defaultdict
 """
 
 
+<<<<<<< Updated upstream
 #initialize variables
 dict1 = dict()
 dict2 = dict()
@@ -39,6 +40,8 @@ centeroid = []
 
 
 # ------------------------------FUNCTIONS--------------------------
+=======
+>>>>>>> Stashed changes
 def generate_flip(prob, d):
     heads = []
     tails = []
@@ -49,6 +52,7 @@ def generate_flip(prob, d):
             List2 = tails.append(1)
     return (len(heads))
 
+<<<<<<< Updated upstream
 def k_means(dataset,k):
 
     key_list = list(dataset)
@@ -92,22 +96,41 @@ for times in range (0,n):
             dict1[z] = 1
         else:
             dict1[z] =dict1[z]+1
+=======
+
+# initialize variables
+dict1 = dict()
+dict2 = dict()
+sum = 0
+d = 100
+n = 10000
+
+# case1
+theta1 = 1/4
+print("#(head, tails) for", d, "flips and", n, "tries with theta=", theta1)
+for times in range(0, n):
+    z = generate_flip(theta1, d)
+    if z not in dict1:
+        dict1[z] = 1
+    else:
+        dict1[z] = dict1[z]+1
+>>>>>>> Stashed changes
 print("The probability of (Head, Tail)>>>")
 for key in dict1:
     #print(key," Head: ", dict1[key]/(n))
     sum += (dict1[key]/(n))
 print("The sum of the probabilities is:", sum, '\n')
 
-#case2
+# case2
 theta2 = 1/2
-sum=0
-print("#(head, tails) for", d, "flips and", n ,"tries with theta=" ,theta2)
-for times in range (0,n):
-        z = generate_flip(theta2,d)
-        if z not in dict2:
-            dict2[z] = 1
-        else:
-            dict2[z] =dict2[z]+1
+sum = 0
+print("#(head, tails) for", d, "flips and", n, "tries with theta=", theta2)
+for times in range(0, n):
+    z = generate_flip(theta2, d)
+    if z not in dict2:
+        dict2[z] = 1
+    else:
+        dict2[z] = dict2[z]+1
 print("The probability of (Head, Tail)>>>")
 for key in dict2:
     # print(key," Head: ", dict2[key]/(n))
@@ -123,11 +146,11 @@ od2 = collections.OrderedDict(sorted(dict2.items()))
 print(od2)
 
 
-lists = sorted(od1.items()) # sorted by key, return a list of tuples
-x, y = zip(*lists) # unpack a list of pairs into two tuples
+lists = sorted(od1.items())  # sorted by key, return a list of tuples
+x, y = zip(*lists)  # unpack a list of pairs into two tuples
 
-lists = sorted(od2.items()) # sorted by key, return a list of tuples
-v, w = zip(*lists) # unpack a list of pairs into two tuples
+lists = sorted(od2.items())  # sorted by key, return a list of tuples
+v, w = zip(*lists)  # unpack a list of pairs into two tuples
 
 
 output1 = list(od1.values())
@@ -144,6 +167,7 @@ print("sorted x values of dict1 are:", output2)
 print("all probability in dict2 are:", probability2)
 
 
+<<<<<<< Updated upstream
 
 d3 = collections.OrderedDict(list(od1.items()) + list(od2.items()))
 od3 = collections.OrderedDict(sorted(d3.items()))
@@ -158,6 +182,13 @@ k_means(od3,2)
 
 
 
+=======
+# -------------------------------PLOTTING THE GRAPH-------------------------------
+# plt.title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
+# plt.xlabel("X Number of heads")
+# plt.ylabel("Probability")
+# plt.legend([f'Theta = {theta1}', f'Theta = {theta2}'])
+>>>>>>> Stashed changes
 
 
 
@@ -178,17 +209,16 @@ fig, ax = plt.subplots()
 l_list1 = [k for k, v in od1.items() for _ in range(v)]
 mu1 = np.mean(l_list1)
 sigma1 = np.std(l_list1)
-plt.bar(list(od1.keys()),probability1)
+plt.bar(list(od1.keys()), probability1)
 u = np.linspace(mu1 - 4 * sigma1, mu1 + 4 * sigma1, 100)
 ax = plt.twinx()
-
 
 
 # plot the 2st theta and gausian
 l_list2 = [k for k, v in od2.items() for _ in range(v)]
 mu2 = np.mean(l_list2)
 sigma2 = np.std(l_list2)
-plt.bar(list(od2.keys()),probability2, color='orange')
+plt.bar(list(od2.keys()), probability2, color='orange')
 u2 = np.linspace(mu2 - 4 * sigma2, mu2 + 4 * sigma2, 100)
 #ax2 = plt.twinx()
 
@@ -196,7 +226,8 @@ ax.plot(u, stats.norm.pdf(u, mu1, sigma1), color='purple')
 ax.plot(u2, stats.norm.pdf(u2, mu2, sigma2), color='crimson')
 
 
-ax.set_title(f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
+ax.set_title(
+    f'Histogram of {d} flips, {n} tries, and Theta = {theta1} & {theta2}')
 fig.supxlabel('X Number of heads')
 fig.supylabel('Probability')
 
@@ -292,7 +323,3 @@ for i in range (0,len(centeroid)):
 
 
 plt.show()
-
-
-
-
