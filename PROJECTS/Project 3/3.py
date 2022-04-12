@@ -109,7 +109,7 @@ def animate(frame):
 
 try_list = []
 # case1
-theta1 = 2/5
+theta1 = 1/3
 print("#(head, tails) for", d, "flips and", n, "tries with theta=", theta1)
 for times in range(0, n):
     z = generate_flip(theta1, d)
@@ -205,6 +205,7 @@ mu2 = np.mean(l_list2)
 sigma2 = np.std(l_list2)
 plt.bar(list(od2.keys()), probability2, color='orange')
 u2 = np.linspace(mu2 - 4 * sigma2, mu2 + 4 * sigma2, 100)
+#ax2 = plt.twinx()
 
 ax.plot(u, stats.norm.pdf(u, mu1, sigma1))
 ax.plot(u2, stats.norm.pdf(u2, mu2, sigma2), color='orange')
@@ -263,6 +264,7 @@ for i in range(0, 20):
 
     od1 = cluster1
     od2 = cluster2
+    plt.pause(0.5)
 
     cluster1.clear()
     cluster2.clear()
@@ -271,9 +273,8 @@ for i in range(0, 20):
     plt.axvline(axlines[1], ls='--', color='blue')
     plt.axvline((axlines[0]+axlines[1])/2, ls='--', color='red')
 
-    plt.pause(0.25)
-    ax.lines.pop(0)
     axlines.clear()
+    plt.axline.pop(0)
 
 
 # USING SKLEARN KMEANS LIBRARY
