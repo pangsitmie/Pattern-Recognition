@@ -1,3 +1,4 @@
+from types import new_class
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -44,7 +45,7 @@ def all_data():
     t1 = data['AI_T1_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
     t2 = data['AI_T2_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
 
-    plt.imshow(t1[1])
+    # plt.imshow(t1[1])
 
     return pd, t1, t2
 
@@ -61,34 +62,79 @@ def self_Kmeans(x, pic_num):
         group3 = []
         group4 = []
 
-    plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
-    plt.subplot(2, 4, 1)
-    plt.gca().set_title(title, loc='left')
+        label = np.zeros(39277)
+        for index, i in enumerate(range(39277*(pic_num), 39277*(pic_num+1))):
+            current_point = x[i, :]
+            d1 = np.sqrt(np.sum(np.square(c1 - current_point)))
+            d2 = np.sqrt(np.sum(np.square(c2 - current_point)))
+            d3 = np.sqrt(np.sum(np.square(c3 - current_point)))
+            d4 = np.sqrt(np.sum(np.square(c4 - current_point)))
+            min_value = min([d1, d2, d3, d4])
+            min_index = [d1, d2, d3, d4].index(min_value)
 
-    plt.imshow(label)
-    plt.subplot(3, 4, 2)
+            if min_index == 0:
+                group1.append(current_point)
+                label[index] = 0
+            elif min_index == 1:
+                group2.append(current_point)
+                label[index] = 1
+            elif min_index == 2:
+                group3.append(current_point)
+                label[index] = 2
+            elif min_index == 3:
+                group4.append(current_point)
+                label[index] = 3
 
-    plt.imshow(label1)
-    plt.subplot(2, 4, 3)
+        temp_c = np.round(np.array([c1, c2, c3, c4]), 3)
 
-    plt.imshow(label2)
-    plt.subplot(2, 4, 4)
+        c1 = np.mean(np.array(group1), axis=0)
+        c2 = np.mean(np.array(group2), axis=0)
+        c3 = np.mean(np.array(group3), axis=0)
+        c4 = np.mean(np.array(group4), axis=0)
 
-    plt.imshow(label3)
+        now_c = np.round(np.array([c1, c2, c3, c4]), 3)
+        s_c1 = str(c1)
+        s_c2 = str(c2)
+        s_c3 = str(c3)
+        s_c4 = str(c4)
 
-    plt.subplot(2, 4, 5)
-    plt.imshow(b[pic_num, ...])
+        title = 'c1: ' + s_c1 + '   ' + 'c2: ' + s_c2 + \
+            '   ' 'c3: ' + s_c3 + '   ' + 'c4: ' + s_c4
+        if(now_c == temp_c).all():
+            break
+        label = np.asarray(label).reshape(181, 217)
+        label1 = np.copy(label)
+        label1[label1 != 1] = 0
 
-    plt.subplot(2, 4, 6)
-    plt.imshow(b1[pic_num, ...])
+        label2 = np.copy(label)
+        label2[label2 != 2] = 0
 
-    plt.subplot(2, 4, 7)
-    plt.imshow(b2[pic_num, ...])
+        label3 = np.copy(label)
+        label3[label3 != 3] = 0
+        manager = plt.get_current_fig_manager()
 
-    plt.subplot(2, 4, 8)
-    plt.imshow(b3[pic_num, ...])
+        plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[])
+        plt.subplot(2, 4, 1)
+        plt.gca().set_title(title, loc='left')
 
-    plt.pause(0.01)
+        plt.imshow(label)
+        plt.subplot(2, 4, 2)
+        plt.imshow(label1)
+        plt.subplot(2, 4, 3)
+        plt.imshow(label2)
+        plt.subplot(2, 4, 4)
+        plt.imshow(label3)
+
+        plt.subplot(2, 4, 5)
+        plt.imshow(b[pic_num, ...])
+        plt.subplot(2, 4, 6)
+        plt.imshow(b1[pic_num, ...])
+        plt.subplot(2, 4, 7)
+        plt.imshow(b2[pic_num, ...])
+        plt.subplot(2, 4, 8)
+        plt.imshow(b3[pic_num, ...])
+
+        plt.pause(0.01)
 
 
 if __name__ == "__main__":
@@ -107,5 +153,5 @@ if __name__ == "__main__":
 
     x = np.hstack((pd, t1, t2))
     print(t1[0])
-    # self_Kmeans(x,1)
-    plt.show()
+    self_Kmeans(x, 1)
+    # plt.show()
