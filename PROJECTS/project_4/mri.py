@@ -1,22 +1,21 @@
+#JERIEL B10817055
 from types import new_class
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.cluster import KMeans
-from sklearn.svm import SVC
-from scipy.spatial.distance import pdist
+# from sklearn.cluster import KMeans
+# from sklearn.svm import SVC
+# from scipy.spatial.distance import pdist
 from multiprocessing import Process, Pool, cpu_count, Queue, Manager
 
 # LOAD DATA
-
-
-def all_ground_truth():
+def load_all_ground_truth():
     b1 = []
     b2 = []
     b3 = []
 
     for index in range(11, 29):
-        path = r"C:\Users\pangsitmie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + \
+        path = r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + \
             str(index)+"_groundtruth.npy"
         gt = np.load(path, allow_pickle=True).item()
         b1.append(gt['B1'])
@@ -37,9 +36,9 @@ def all_ground_truth():
     return b, b1, b2, b3
 
 
-def all_data():
+def load_all_data():
     data = np.load(
-        r"C:\Users\pangsitmie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\datanpy\simulation_Brain_Web_noise3_rf0_5mm_all_images.npy", allow_pickle=True).item()
+        r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\datanpy\simulation_Brain_Web_noise3_rf0_5mm_all_images.npy", allow_pickle=True).item()
 
     pd = data['AI_PD_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
     t1 = data['AI_T1_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
@@ -98,8 +97,8 @@ def self_Kmeans(x, pic_num):
         s_c3 = str(c3)
         s_c4 = str(c4)
 
-        title = 'c1: ' + s_c1 + '   ' + 'c2: ' + s_c2 + \
-            '   ' 'c3: ' + s_c3 + '   ' + 'c4: ' + s_c4
+        title = 'c1: ' + s_c1 + '       ' + 'c2: ' + s_c2 + \
+            '       ' 'c3: ' + s_c3 + '     ' + 'c4: ' + s_c4
         if(now_c == temp_c).all():
             break
         label = np.asarray(label).reshape(181, 217)
@@ -139,8 +138,8 @@ def self_Kmeans(x, pic_num):
 
 if __name__ == "__main__":
     # data import
-    b, b1, b2, b3 = all_ground_truth()
-    pd, t1, t2 = all_data()
+    b, b1, b2, b3 = load_all_ground_truth()
+    pd, t1, t2 = load_all_data()
     mask = np.zeros((18, 181, 217))
     mask[b > 0] = 1
     pd = pd*mask
