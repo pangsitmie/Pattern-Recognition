@@ -1,4 +1,4 @@
-#JERIEL B10817055
+# JERIEL B10817055
 from types import new_class
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,13 +9,16 @@ import matplotlib.pyplot as plt
 from multiprocessing import Process, Pool, cpu_count, Queue, Manager
 
 # LOAD DATA
+
+
 def load_all_ground_truth():
     b1 = []
     b2 = []
     b3 = []
 
     for index in range(11, 29):
-        path = r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + str(index)+"_groundtruth.npy"
+        path = r"C:\Users\pangsitmie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + \
+            str(index)+"_groundtruth.npy"
         gt = np.load(path, allow_pickle=True).item()
         b1.append(gt['B1'])
         b2.append(gt['B2'])
@@ -25,7 +28,7 @@ def load_all_ground_truth():
     b2 = np.array(b2)
     b3 = np.array(b3)
 
-    #b will be all elements of a whenever the condition holds true (i.e only positive elements)
+    # b will be all elements of a whenever the condition holds true (i.e only positive elements)
     # Otherwise, set it as 0
     b1 = np.where(b1 == 0.6, 1, b1)
     b2 = np.where(b2 == 0.6, 2, b2)
@@ -39,7 +42,7 @@ def load_all_ground_truth():
 
 def load_all_data():
     data = np.load(
-        r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\datanpy\simulation_Brain_Web_noise3_rf0_5mm_all_images.npy", allow_pickle=True).item()
+        r"C:\Users\pangsitmie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\datanpy\simulation_Brain_Web_noise3_rf0_5mm_all_images.npy", allow_pickle=True).item()
 
     pd = data['AI_PD_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
     t1 = data['AI_T1_n3_rf0'].swapaxes(0, 2).swapaxes(1, 2)
@@ -65,12 +68,12 @@ def self_Kmeans(x, pic_num):
         label = np.zeros(39277)
         for index, i in enumerate(range(39277*(pic_num), 39277*(pic_num+1))):
             current_point = x[i, :]
-            d1 = np.sqrt(np.sum(np.square(c1 - current_point)))
-            d2 = np.sqrt(np.sum(np.square(c2 - current_point)))
-            d3 = np.sqrt(np.sum(np.square(c3 - current_point)))
-            d4 = np.sqrt(np.sum(np.square(c4 - current_point)))
-            min_value = min([d1, d2, d3, d4])
-            min_index = [d1, d2, d3, d4].index(min_value)
+            dis1 = np.sqrt(np.sum(np.square(c1 - current_point)))
+            dis2 = np.sqrt(np.sum(np.square(c2 - current_point)))
+            dis3 = np.sqrt(np.sum(np.square(c3 - current_point)))
+            dis4 = np.sqrt(np.sum(np.square(c4 - current_point)))
+            min_value = min([dis1, dis2, dis3, dis4])
+            min_index = [dis1, dis2, dis3, dis4].index(min_value)
 
             if min_index == 0:
                 group1.append(current_point)
@@ -101,6 +104,7 @@ def self_Kmeans(x, pic_num):
         title = 'c1: ' + s_c1 + '       ' + 'c2: ' + s_c2 + \
             '       ' 'c3: ' + s_c3 + '     ' + 'c4: ' + s_c4
         if(now_c == temp_c).all():
+            plt.savefig('slice '+str(pic_num+11)+' res.png')
             break
         label = np.asarray(label).reshape(181, 217)
         label1 = np.copy(label)
@@ -134,7 +138,8 @@ def self_Kmeans(x, pic_num):
         plt.subplot(2, 4, 8)
         plt.imshow(b3[pic_num, ...])
 
-        plt.pause(0.01)
+        plt.title("K-Means Result: slice-" + str(pic_num+11))
+        plt.pause(0.0001)
 
 
 if __name__ == "__main__":
@@ -152,6 +157,7 @@ if __name__ == "__main__":
     t2 = t2.reshape(181*217*18, 1)
 
     x = np.hstack((pd, t1, t2))
-    print(t1[0])
-    self_Kmeans(x, 1)
+
+    for r in range(18):
+        self_Kmeans(x, r)
     # plt.show()
