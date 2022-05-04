@@ -15,8 +15,7 @@ def load_all_ground_truth():
     b3 = []
 
     for index in range(11, 29):
-        path = r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + \
-            str(index)+"_groundtruth.npy"
+        path = r"C:\Users\jerie\Documents\GitHub\Pattern-Recognition\PROJECTS\project_4\npy\gtnpy\slices_" + str(index)+"_groundtruth.npy"
         gt = np.load(path, allow_pickle=True).item()
         b1.append(gt['B1'])
         b2.append(gt['B2'])
@@ -26,6 +25,8 @@ def load_all_ground_truth():
     b2 = np.array(b2)
     b3 = np.array(b3)
 
+    #b will be all elements of a whenever the condition holds true (i.e only positive elements)
+    # Otherwise, set it as 0
     b1 = np.where(b1 == 0.6, 1, b1)
     b2 = np.where(b2 == 0.6, 2, b2)
     b3 = np.where(b3 == 0.6, 3, b3)
